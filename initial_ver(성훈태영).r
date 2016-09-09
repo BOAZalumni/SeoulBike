@@ -1,5 +1,7 @@
+### R에서 shpae 데이터로 내보내는 코드 
+## 폐기 (csv로 QGIS에 load) 
+## XML 패키지 참고용
 
-### 성훈, 태영 초기 버전
 
 install.packages("XML") 
 library(XML)
