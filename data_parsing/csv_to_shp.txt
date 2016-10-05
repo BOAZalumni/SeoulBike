@@ -1,0 +1,34 @@
+  library(rgdal)
+  library(sp)
+  library(ggplot2)
+  
+  list <- list.files(paste("work/",foldername,sep="")) #추출된 폴더의 csv 파일 리스트
+  count <- length(list) #csv 파일 리스트 개수
+  
+  #변수가 22개일때 23개일때 각각 변수명 바꾸기. 10자 넘어가면 변환안됨... 22는 moving_distance 없음.
+  var_22 <- c("latitude","longitude","elevation","ele_gain",
+              "ele_min","ele_max","grade","grade_min",
+              "grade_max","s","s_max","s_avg",
+              "s_avg_m","direction","accuracy","total_dis",
+              "total_cal","total_time","ttm",
+              "activity","e(vent_f","save_date") 
+  var_23 <- c("latitude","longitude","elevation","ele_gain",
+              "ele_min","ele_max","grade","grade_min",
+              "grade_max","s","s_max","s_avg",
+              "s_avg_m","direction","accuracy","total_dis",
+              "total_cal","total_time","moving_dis","ttm",
+              "activity","event_f","save_date") 
+  for (i in 1:(count-6)) {
+    shp <- read.csv(paste("work/", foldername, "/", list[i], sep=""))
+    col <- colnames(shp)
+    if (length(col)==22) {
+      colnames(shp) <- var_22
+    } else {
+      colnames(shp) <- var_23
+    }
+    coordinates(shp) <-~ longitude + latitude
+    writeOGR(shp,
+             paste("shp/",foldername,sep=""), #이 경로에
+             paste(foldername,"_shp_",i,sep=""), #이런 파일 이름으로
+             driver = "ESRI Shapefile") #좌표계설정인듯
+  }
