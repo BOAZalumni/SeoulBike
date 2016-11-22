@@ -2,8 +2,6 @@ library(igraph)
 library(sp)
 library(rgdal)
 
-rm(list=ls())
-
 #1120 함수===================================================================================
 
 setwd("/Users/Dowon/Desktop/BikeProject/07_qgis/1120_Network/")
